@@ -1,0 +1,14 @@
+name: Hello
+
+on: push
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say hi
+        run: echo "Hello, GitHub Actions"
+      - name: Look around
+        run: |
+          pwd
+          ls -la
