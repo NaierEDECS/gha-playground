@@ -14,3 +14,8 @@ jobs:
         run: |
           pwd
           ls -la
+  goodbye:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Look around
+        run: ls -la
