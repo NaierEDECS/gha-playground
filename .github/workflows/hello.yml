@@ -20,6 +20,7 @@ jobs:
         run: echo "tag=v-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
 
   goodbye:
+    needs: hello
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
