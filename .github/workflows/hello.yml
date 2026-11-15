@@ -15,15 +15,25 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v4
-      - name: Say hi
-        run: echo "Hello, GitHub Actions"
-      - name: Look around
+      - name: Make a "build"
         run: |
-          pwd
-          ls -la
+          mkdir build
+          echo "built at $(date)" > build/output.txt
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-build
+          path: build/
+
   goodbye:
     needs: hello
     runs-on: ubuntu-latest
     steps:
+      - name: Download build
+        uses: actions/download-artifact@v4
+        with:
+          name: my-build
       - name: Look around
-        run: ls -la
+        run: |
+          ls -la
+          cat output.txt
