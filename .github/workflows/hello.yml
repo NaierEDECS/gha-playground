@@ -12,28 +12,16 @@ on:
 jobs:
   hello:
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.make_tag.outputs.tag }}
     steps:
-      - name: Get code
-        uses: actions/checkout@v4
-      - name: Make a "build"
-        run: |
-          mkdir build
-          echo "built at $(date)" > build/output.txt
-      - name: Upload build
-        uses: actions/upload-artifact@v4
-        with:
-          name: my-build
-          path: build/
+      - name: Make a tag
+        id: make_tag
+        run: echo "tag=v-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
 
   goodbye:
     needs: hello
     runs-on: ubuntu-latest
     steps:
-      - name: Download build
-        uses: actions/download-artifact@v4
-        with:
-          name: my-build
-      - name: Look around
-        run: |
-          ls -la
-          cat output.txt
+      - name: Deploy
+        run: echo "Deploying image myapp:${{ needs.hello.outputs.tag }}"
