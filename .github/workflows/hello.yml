@@ -1,6 +1,6 @@
 name: Hello
 
-on: push
+on: workflow_dispatch
 
 jobs:
   hello:
@@ -14,8 +14,6 @@ jobs:
         run: |
           pwd
           ls -la
-      - name: Break on purpose
-        run: exit 1
   goodbye:
     needs: hello
     runs-on: ubuntu-latest
