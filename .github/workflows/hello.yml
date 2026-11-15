@@ -15,6 +15,7 @@ jobs:
           pwd
           ls -la
   goodbye:
+    needs: hello
     runs-on: ubuntu-latest
     steps:
       - name: Look around
