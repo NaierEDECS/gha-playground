@@ -8,6 +8,7 @@ jobs:
     steps:
       - name: Tests
         run: exit 1
+        continue-on-error: true
       - name: Upload logs
         if: failure()
         run: echo "uploading logs..."
