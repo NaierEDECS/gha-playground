@@ -13,4 +13,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      - run: node --version
+      - name: Test
+        shell: bash
+        run: |
+          if [ "${{ matrix.node }}" = "18" ] && [ "${{ matrix.os }}" = "windows-latest" ]; then
+            echo "node 18 on windows: failing on purpose"; exit 1
+          fi
+          sleep 30
+          echo "node ${{ matrix.node }} on ${{ matrix.os }}: passed"
