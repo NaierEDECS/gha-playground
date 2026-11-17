@@ -1,0 +1,13 @@
+name: Greet
+description: Say hello to someone
+inputs:
+  who:
+    description: Who to greet
+    required: true
+runs:
+  using: composite
+  steps:
+    - run: echo "Hello, ${{ inputs.who }}!"
+      shell: bash
+    - run: echo "Today is $(date +%A)"
+      shell: bash
