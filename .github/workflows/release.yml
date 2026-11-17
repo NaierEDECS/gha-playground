@@ -7,8 +7,11 @@ jobs:
     uses: ./.github/workflows/reusable-deploy.yml
     with:
       target: staging
+    # no secrets: line → reusable workflow gets NO secrets
+
   prod:
     needs: staging
     uses: ./.github/workflows/reusable-deploy.yml
     with:
       target: production
+    secrets: inherit        # pass all of the caller's secrets through

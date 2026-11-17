@@ -11,4 +11,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Deploying to ${{ inputs.target }}"
+      - name: Deploy
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: echo "Deploying to ${{ inputs.target }} — password length ${#DB_PASSWORD}"
