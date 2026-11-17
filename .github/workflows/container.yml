@@ -1,0 +1,12 @@
+name: Container
+
+on: workflow_dispatch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: node:20-alpine
+    steps:
+      - run: cat /etc/os-release | head -2
+      - run: node --version
