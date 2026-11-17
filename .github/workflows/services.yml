@@ -1,0 +1,40 @@
+name: Services
+
+on: workflow_dispatch
+
+jobs:
+  on-runner:
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: practice
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 5s --health-retries 10
+    steps:
+      - run: sudo apt-get install -y -qq postgresql-client > /dev/null
+      - name: Try both hosts
+        run: |
+          for h in localhost db; do
+            if PGPASSWORD=practice psql -h $h -U postgres -tAc "SELECT 'connected'" >/dev/null 2>&1; then
+              echo "host=$h → CONNECTED"; else echo "host=$h → FAILED"; fi
+          done
+
+  in-container:
+    runs-on: ubuntu-latest
+    container: postgres:16
+    services:
+      db:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: practice
+        options: --health-cmd pg_isready --health-interval 5s --health-retries 10
+    steps:
+      - name: Try both hosts
+        run: |
+          for h in localhost db; do
+            if PGPASSWORD=practice psql -h $h -U postgres -tAc "SELECT 'connected'" >/dev/null 2>&1; then
+              echo "host=$h → CONNECTED"; else echo "host=$h → FAILED"; fi
+          done
