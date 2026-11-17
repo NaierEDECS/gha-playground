@@ -1,0 +1,14 @@
+name: Reusable deploy
+
+on:
+  workflow_call:
+    inputs:
+      target:
+        type: string
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying to ${{ inputs.target }}"

@@ -1,0 +1,14 @@
+name: Release
+
+on: workflow_dispatch
+
+jobs:
+  staging:
+    uses: ./.github/workflows/reusable-deploy.yml
+    with:
+      target: staging
+  prod:
+    needs: staging
+    uses: ./.github/workflows/reusable-deploy.yml
+    with:
+      target: production
