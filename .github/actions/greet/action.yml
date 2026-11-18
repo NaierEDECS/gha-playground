@@ -11,3 +11,6 @@ runs:
       shell: bash
     - run: echo "Today is $(date +%A)"
       shell: bash
+    - name: Can the composite action see README.md?
+      run: ls README.md && echo "FOUND" || echo "NOT FOUND"
+      shell: bash

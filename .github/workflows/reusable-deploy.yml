@@ -15,3 +15,5 @@ jobs:
         env:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: echo "Deploying to ${{ inputs.target }} — password length ${#DB_PASSWORD}"
+      - name: Can the reusable workflow see README.md?
+        run: ls README.md && echo "FOUND" || echo "NOT FOUND"
