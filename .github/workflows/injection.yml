@@ -1,0 +1,20 @@
+name: Injection
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: Pretend issue title
+        default: 'hi"; echo "💥 ATTACKER CODE RAN, I can read $GITHUB_WORKSPACE"; echo "'
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Vulnerable
+        run: echo "New issue: ${{ inputs.title }}"
+
+      - name: Safe
+        env:
+          TITLE: ${{ inputs.title }}
+        run: echo "New issue: $TITLE"
