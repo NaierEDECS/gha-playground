@@ -1,0 +1,46 @@
+name: Perms
+
+on: workflow_dispatch
+
+jobs:
+  image-builder:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Try git push
+        continue-on-error: true
+        run: |
+          git config user.name bot && git config user.email bot@example.com
+          git commit --allow-empty -m "test from image-builder"
+          git push origin HEAD:refs/heads/bot-test-image-builder
+      - name: Try image push
+        continue-on-error: true
+        run: |
+          echo 'FROM alpine:3.20' > Dockerfile
+          docker build -q -t ghcr.io/naieredecs/gha-playground:image-builder .
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          docker push ghcr.io/naieredecs/gha-playground:image-builder
+
+  code-bot:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Try git push
+        continue-on-error: true
+        run: |
+          git config user.name bot && git config user.email bot@example.com
+          git commit --allow-empty -m "test from code-bot"
+          git push origin HEAD:refs/heads/bot-test-code-bot
+      - name: Try image push
+        continue-on-error: true
+        run: |
+          echo 'FROM alpine:3.20' > Dockerfile
+          docker build -q -t ghcr.io/naieredecs/gha-playground:code-bot .
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          docker push ghcr.io/naieredecs/gha-playground:code-bot
