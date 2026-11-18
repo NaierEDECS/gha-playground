@@ -5,7 +5,8 @@ on:
     inputs:
       title:
         description: Pretend issue title
-        default: 'hi"; echo "💥 ATTACKER CODE RAN, I can read $GITHUB_WORKSPACE"; echo "'
+        type: string
+        default: 'hi"; echo "ATTACKER CODE RAN"; echo "'
 
 jobs:
   demo:
