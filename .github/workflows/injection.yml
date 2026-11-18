@@ -13,9 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Vulnerable
-        run: echo "New issue: ${{ inputs.title }}"
+        run: |
+          echo "New issue: ${{ inputs.title }}"
 
       - name: Safe
         env:
           TITLE: ${{ inputs.title }}
-        run: echo "New issue: $TITLE"
+        run: |
+          echo "New issue: $TITLE"
